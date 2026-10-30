@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02H Store — Profile | Akun Member</title>
+<meta name="description" content="Profil member 02H Store — riwayat pesanan, wishlist, dan pengaturan akun.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0b; --black-soft:#141416; --black-card:#191a1d;
+  --line:rgba(255,255,255,.09); --yellow:#FFD200; --white:#f5f5f1;
+  --gray:#9b9ba1; --gray-dim:#6c6c72;
+  --a-shoe:#FF3D68; --a-shoe-2:#FFB199; --a-apparel:#2FD9A6; --a-apparel-2:#B7FFCB;
+  --a-bag:#6C7CFF; --a-bag-2:#B7C2FF; --a-acc:#FF9F43; --a-acc-2:#FFD59E;
+  --a-glass:#29C5F6; --a-glass-2:#A6E9FF; --a-watch:#C77DFF; --a-watch-2:#E9C6FF;
+  --radius:16px; --disp:'Anton',sans-serif; --body:'Manrope',sans-serif;
+  --serif:'Playfair Display',serif; --mono:'Space Mono',monospace; --maxw:1240px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--black);color:var(--white);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+::selection{background:var(--yellow);color:var(--black)}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow);display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:16px;height:2px;background:var(--yellow);display:inline-block}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+.section-title{font-family:var(--disp);text-transform:uppercase;font-weight:400;font-size:clamp(30px,4vw,46px);margin:10px 0 0;line-height:1.02}
+.section-sub{color:var(--gray);max-width:480px;font-size:15px;line-height:1.6;margin:10px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--body);font-weight:800;font-size:14px;padding:15px 28px;border-radius:999px;border:2px solid transparent;transition:transform .18s ease,background .18s ease,color .18s ease,border-color .18s ease;white-space:nowrap}
+.btn-primary{background:var(--yellow);color:var(--black)}
+.btn-primary:hover{transform:translateY(-2px);background:#ffe14d}
+.btn-outline{background:transparent;color:var(--white);border-color:rgba(255,255,255,.28)}
+.btn-outline:hover{border-color:var(--yellow);color:var(--yellow);transform:translateY(-2px)}
+.btn-dark{background:var(--black);color:var(--yellow)}
+.icon{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+.marquee-bar{background:repeating-linear-gradient(-45deg,var(--yellow),var(--yellow) 14px,#171717 14px,#171717 28px);overflow:hidden;white-space:nowrap;padding:9px 0}
+.marquee-track{display:inline-flex;gap:40px;animation:scroll-left 26s linear infinite}
+.marquee-track span{font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--black);background:var(--yellow);padding:2px 12px;border-radius:999px}
+@keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+header{position:sticky;top:0;z-index:100;background:rgba(10,10,11,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:var(--maxw);margin:0 auto;gap:20px}
+.logo{font-family:var(--disp);font-size:26px;letter-spacing:.02em;display:flex;align-items:baseline;gap:2px}
+.logo span{color:var(--yellow)}
+.nav-links{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14.5px}
+.nav-links a{position:relative;padding:9px 16px;color:var(--gray);border-radius:999px;transition:color .18s ease,background .18s ease}
+.nav-links a:hover{color:var(--white)}
+.nav-links a.active{color:var(--black);background:var(--yellow)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{position:relative;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:var(--black-soft);border:1px solid var(--line);color:var(--white);transition:border-color .18s ease,color .18s ease}
+.icon-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+.icon-btn .icon{width:19px;height:19px}
+.cart-count{position:absolute;top:-5px;right:-5px;background:var(--yellow);color:var(--black);font-family:var(--mono);font-size:10.5px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.burger{display:none;width:42px;height:42px;border-radius:999px;background:var(--black-soft);border:1px solid var(--line);align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.burger span{width:18px;height:2px;background:var(--white)}
+
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--yellow);color:var(--black);font-weight:800;font-size:14px;padding:13px 24px;border-radius:999px;box-shadow:0 18px 40px -10px rgba(0,0,0,.6);opacity:0;transition:all .35s cubic-bezier(.4,1.6,.6,1);z-index:200;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+footer{background:var(--black);border-top:1px solid var(--line);padding:56px 0 0}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:48px;border-bottom:1px solid var(--line)}
+.footer-about p{color:var(--gray);font-size:13.5px;line-height:1.7;max-width:280px;margin:14px 0 20px}
+.footer-social{display:flex;gap:10px}
+.social-btn{width:38px;height:38px;border-radius:50%;background:var(--black-soft);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;font-weight:700;transition:background .18s ease,color .18s ease}
+.social-btn:hover{background:var(--yellow);color:var(--black)}
+.footer-col h4{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-dim);margin:0 0 18px}
+.footer-col ul{display:flex;flex-direction:column;gap:12px}
+.footer-col a{font-size:14px;transition:color .18s ease}
+.footer-col a:hover{color:var(--yellow)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:24px 0;flex-wrap:wrap;gap:14px}
+.footer-bottom p{margin:0;font-size:12.5px;color:var(--gray-dim)}
+.pay-row{display:flex;gap:8px;flex-wrap:wrap}
+.pay-badge{font-family:var(--mono);font-size:10.5px;font-weight:700;border:1px solid var(--line);border-radius:6px;padding:5px 9px;color:var(--gray)}
+
+.page-head{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+.profile-card{display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:center;background:var(--black-card);border:1px solid var(--line);border-radius:24px;padding:36px 40px;margin-top:36px}
+.avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(140deg,var(--yellow),#b98f00);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:34px;color:var(--black)}
+.profile-card h2{font-family:var(--disp);font-size:30px;font-weight:400;text-transform:uppercase;margin:0 0 6px}
+.profile-card .handle{font-family:var(--mono);font-size:13px;color:var(--yellow);margin:0 0 12px}
+.profile-meta{display:flex;gap:22px;flex-wrap:wrap}
+.profile-meta span{font-size:12.5px;color:var(--gray);display:flex;align-items:center;gap:6px}
+.profile-meta .icon{width:14px;height:14px;color:var(--yellow)}
+.badge-member{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,210,0,.12);color:var(--yellow);border:1px solid rgba(255,210,0,.35);padding:8px 16px;border-radius:999px;white-space:nowrap}
+.badge-silver{background:rgba(192,192,192,.15);color:#e0e0e0;border-color:rgba(192,192,192,.4)}
+.badge-gold{background:rgba(255,215,0,.2);color:#ffd700;border-color:rgba(255,215,0,.6)}
+
+.profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:28px 0 0}
+.pstat{background:var(--black);padding:24px;text-align:center}
+.pstat strong{font-family:var(--disp);font-size:28px;font-weight:400;color:var(--yellow);display:block}
+.pstat span{font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em}
+.panel-section{padding:64px 0;border-bottom:1px solid var(--line)}
+.panel-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:start}
+.panel{background:var(--black-card);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.panel h3{font-family:var(--disp);font-size:20px;font-weight:400;text-transform:uppercase;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.panel h3 .icon{width:20px;height:20px;color:var(--yellow)}
+
+.order-row{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.order-row:last-child{border-bottom:none}
+.order-thumb{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#0a0a0b;flex-shrink:0;background:var(--black-soft);border:1px solid var(--line)}
+.order-thumb .icon{width:24px;height:24px;color:var(--yellow)}
+.order-info{flex:1;min-width:0}
+.order-info .n{font-weight:800;font-size:14px}
+.order-info .d{font-family:var(--mono);font-size:11.5px;color:var(--gray-dim);margin-top:3px}
+.order-amount{font-family:var(--mono);font-weight:700;font-size:13.5px;white-space:nowrap}
+.status{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.status.done{background:rgba(47,217,166,.12);color:var(--a-apparel)}
+
+.wl-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.wl-row:last-child{border-bottom:none}
+.wl-empty{color:var(--gray);font-size:14px;text-align:center;padding:24px 0}
+.wl-remove{margin-left:auto;width:32px;height:32px;border-radius:50%;background:transparent;border:1px solid var(--line);color:var(--gray);display:flex;align-items:center;justify-content:center;transition:all .18s ease}
+.wl-remove:hover{border-color:var(--a-shoe);color:var(--a-shoe)}
+.wl-remove .icon{width:14px;height:14px}
+.cart-summary{display:flex;flex-direction:column;gap:12px}
+.cart-line{display:flex;justify-content:space-between;font-size:14px;color:var(--gray)}
+.cart-line.total{font-weight:800;color:var(--white);font-size:16px;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.cart-line.total .mono{font-family:var(--mono);color:var(--yellow)}
+.btn-block{width:100%;text-align:center;margin-top:12px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dim);margin-bottom:8px}
+.field input{width:100%;background:var(--black-soft);border:1.5px solid var(--line);border-radius:12px;padding:13px 16px;color:var(--white);font-size:14px;font-weight:600;outline:none;transition:border-color .18s ease}
+.field input:focus{border-color:var(--yellow)}
+
+@media (max-width:1080px){.footer-grid{grid-template-columns:1fr 1fr;row-gap:36px}}
+@media (max-width:900px){.profile-card{grid-template-columns:auto 1fr}.badge-member{grid-column:1/-1;justify-self:start}.profile-stats{grid-template-columns:1fr 1fr}.panel-grid{grid-template-columns:1fr}}
+@media (max-width:860px){
+  .nav-links{position:fixed;top:74px;left:0;right:0;bottom:0;background:var(--black);flex-direction:column;align-items:stretch;padding:26px;gap:4px;font-size:19px;transform:translateX(100%);transition:transform .3s ease}
+  .nav-links.open{transform:translateX(0)}
+  .burger{display:flex}
+}
+@media (max-width:640px){.wrap{padding:0 20px}.nav{padding:14px 20px}.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;align-items:flex-start}}
+@media (max-width:560px){.profile-card{padding:26px 20px}.form-grid{grid-template-columns:1fr}.order-amount{display:none}}
+</style>
+</head>
+<body>
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-track">
+    <span>GRATIS ONGKIR MIN. RP 300RB</span><span>PRODUK 100% ORIGINAL</span><span>DISKON HINGGA 70%</span><span>KOLEKSI TERBARU 2026</span>
+    <span>GRATIS ONGKIR MIN. RP 300RB</span><span>PRODUK 100% ORIGINAL</span><span>DISKON HINGGA 70%</span><span>KOLEKSI TERBARU 2026</span>
+  </div>
+</div>
+
+<header id="siteHeader">
+  <div class="nav">
+    <a href="index.html" class="logo">02H<span>.</span>STORE</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="product.html">Product</a>
+      <a href="profile.html" class="active">Profile</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="product.html" aria-label="Cari produk">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </a>
+      <a class="icon-btn" href="profile.html#wishlist" aria-label="Wishlist">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.5-8.9C1 8.7 2 5.2 5.6 5.2c2 0 3.4 1.2 4.4 3 1-1.8 2.4-3 4.4-3 3.6 0 4.6 3.5 3.1 6.9C19 16.6 12 21 12 21z"/></svg>
+      </a>
+      <a class="icon-btn" href="product.html" aria-label="Keranjang belanja" style="text-decoration:none">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M3 4h2l2.2 12a2 2 0 002 1.7h7.4a2 2 0 002-1.6L19 8H6.2"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </div>
+    <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<section class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">Akun Saya</span>
+    <h1 class="section-title">Profile<br>Member</h1>
+
+    <div class="profile-card">
+      <div class="avatar" id="avatarText">O2H</div>
+      <div>
+        <h2 id="userNameDisplay">Pengguna Baru</h2>
+        <p class="handle" id="userHandle">@member.02h &bull; Member Baru</p>
+        <div class="profile-meta">
+          <span id="userEmailDisplay"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg> email@domain.com</span>
+          <span id="userCityDisplay"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-6-5.2-6-10a6 6 0 0112 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg> Kota, Indonesia</span>
+          <span id="userPhoneDisplay"><svg class="icon" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg> +62 8xx-xxxx-xxxx</span>
+        </div>
+      </div>
+      <span class="badge-member" id="memberBadge">Bronze Member</span>
+    </div>
+
+    <div class="profile-stats">
+      <div class="pstat"><strong id="statItemCount">0</strong><span>Total Barang</span></div>
+      <div class="pstat"><strong id="statTotalSpend">Rp0</strong><span>Total Belanja</span></div>
+      <div class="pstat"><strong id="statPoints">0</strong><span>Poin Reward</span></div>
+      <div class="pstat"><strong id="wlStat">0</strong><span>Wishlist</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel-section" id="orders">
+  <div class="wrap panel-grid">
+
+    <div class="panel">
+      <h3><svg class="icon" viewBox="0 0 24 24"><path d="M4 8l1.2-3.2A2 2 0 017 3.5h10a2 2 0 011.8 1.3L20 8"/><rect x="3" y="8" width="18" height="12" rx="2"/></svg> Riwayat Pesanan</h3>
+      <div id="ordersList"></div>
+    </div>
+
+     <div class="panel">
+      <h3><svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M3 4h2l2.2 12a2 2 0 002 1.7h7.4a2 2 0 002-1.6L19 8H6.2"/></svg> Ringkasan Keranjang</h3>
+      <div class="cart-summary" id="cartSummary"></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel-section" id="wishlist">
+  <div class="wrap panel-grid">
+   
+    <div class="panel">
+      <h3><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.5-8.9C1 8.7 2 5.2 5.6 5.2c2 0 3.4 1.2 4.4 3 1-1.8 2.4-3 4.4-3 3.6 0 4.6 3.5 3.1 6.9C19 16.6 12 21 12 21z"/></svg> Wishlist Saya</h3>
+      <div id="wishlistList"></div>
+    </div>
+
+   
+    <div class="panel">
+      <h3><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-3.6 4.5-5.5 8-5.5s6.5 1.9 8 5.5"/></svg> Pengaturan Akun</h3>
+      <form id="settingsForm" class="form-grid">
+        <div class="field"><label>Nama Lengkap</label><input type="text" placeholder="Masukkan nama" required></div>
+        <div class="field"><label>Email</label><input type="email" placeholder="nama@email.com" required></div>
+        <div class="field"><label>No. Telepon</label><input type="tel" placeholder="+62 8xxx" required></div>
+        <div class="field"><label>Kota</label><input type="text" placeholder="Kota tempat tinggal" required></div>
+        <div style="grid-column:1/-1"><button type="submit" class="btn btn-primary btn-block">Simpan Perubahan</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="index.html" class="logo">02H<span>.</span>STORE</a>
+        <p>Destinasi belanja fashion multi-brand — Nike, Adidas, Puma, Zara, Gucci, dan brand ternama lainnya dalam satu tempat.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="#" aria-label="Instagram">IG</a>
+          <a class="social-btn" href="#" aria-label="TikTok">TT</a>
+          <a class="social-btn" href="#" aria-label="X">X</a>
+          <a class="social-btn" href="#" aria-label="Facebook">FB</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigasi</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="product.html">Product</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kategori</h4>
+        <ul>
+          <li><a href="product.html?cat=sepatu">Sepatu</a></li>
+          <li><a href="product.html?cat=pakaian">Pakaian</a></li>
+          <li><a href="product.html?cat=tas">Tas &amp; Dompet</a></li>
+          <li><a href="product.html?cat=aksesoris">Aksesoris</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Bantuan</h4>
+        <ul>
+          <li><a href="profile.html#orders">Lacak Pesanan</a></li>
+          <li><a href="#">Panduan Ukuran</a></li>
+          <li><a href="#">Pengembalian Barang</a></li>
+          <li><a href="#">Hubungi Kami</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 02H Store. Seluruh hak cipta dilindungi.</p>
+      <div class="pay-row">
+        <span class="pay-badge">VISA</span><span class="pay-badge">MASTERCARD</span>
+        <span class="pay-badge">GOPAY</span><span class="pay-badge">OVO</span><span class="pay-badge">QRIS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+  const burger = document.getElementById('burgerBtn');
+  const navLinks = document.getElementById('navLinks');
+  if(burger) burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function rupiah(n){ return 'Rp' + n.toLocaleString('id-ID'); }
+
+  var PRODUCTS = [
+    {id:"p1",name:"Air Max Runner",brand:"NIKE",price:1899000},
+    {id:"p2",name:"Ultraboost Trail",brand:"ADIDAS",price:2150000},
+    {id:"p3",name:"Suede Classic",brand:"PUMA",price:999000},
+    {id:"p4",name:"Air Force 1 White",brand:"NIKE",price:1549000},
+    {id:"p5",name:"530 Retro",brand:"NEW BALANCE",price:1899000},
+    {id:"p6",name:"Oversized Wool Coat",brand:"ZARA",price:1450000},
+    {id:"p7",name:"Track Jacket 3-Stripes",brand:"ADIDAS",price:899000},
+    {id:"p8",name:"Basic Cotton Tee",brand:"H&M",price:149000},
+    {id:"p9",name:"Airism Crew Neck",brand:"UNIQLO",price:199000},
+    {id:"p10",name:"Slim Fit Denim",brand:"ZARA",price:559000},
+    {id:"p11",name:"GG Leather Tote Bag",brand:"GUCCI",price:24500000},
+    {id:"p12",name:"Structured Handbag",brand:"ZARA",price:1299000},
+    {id:"p13",name:"Essential Backpack",brand:"ADIDAS",price:449000},
+    {id:"p14",name:"Sport Cap Classic",brand:"PUMA",price:249000},
+    {id:"p15",name:"Crystal Aviator Sunglasses",brand:"GUCCI",price:8900000},
+    {id:"p16",name:"Digital Sport Watch",brand:"NIKE",price:1199000},
+    {id:"p17",name:"Wayfarer Classic",brand:"RAY-BAN",price:1750000},
+    {id:"p18",name:"G-Shock GA-2100",brand:"CASIO",price:1399000}
+  ];
+
+
+  function getCart(){ try { return JSON.parse(localStorage.getItem('o2h_cart')) || []; } catch(e){ return []; } }
+  function setCart(c){ localStorage.setItem('o2h_cart', JSON.stringify(c)); }
+
+  function getWish(){ try { return JSON.parse(localStorage.getItem('o2h_wish')) || []; } catch(e){ return []; } }
+
+  function getOrders(){ try { return JSON.parse(localStorage.getItem('o2h_orders')) || []; } catch(e){ return []; } }
+  function setOrders(o){ localStorage.setItem('o2h_orders', JSON.stringify(o)); }
+
+  function getProfile(){ 
+    try { 
+      return JSON.parse(localStorage.getItem('o2h_profile')) || {
+        name: "Pengguna Baru", email: "member@02hstore.com", phone: "+62 812-0000-0000", city: "Bandung"
+      }; 
+    } catch(e){ return {}; } 
+  }
+
+  function renderProfileAndStats() {
+    const profile = getProfile();
+    const orders = getOrders();
+
+
+    let totalItems = 0;
+    let totalSpend = 0;
+
+    orders.forEach(ord => {
+      totalItems += ord.itemsCount || 1;
+      totalSpend += ord.totalPrice || 0;
+    });
+
+    const rewardPoints = Math.floor(totalSpend / 10000); 
+
+  
+    let memberStatus = "Bronze Member";
+    let badgeClass = "badge-member";
+
+    if (totalItems >= 50) {
+      memberStatus = "Gold Member";
+      badgeClass = "badge-member badge-gold";
+    } else if (totalItems >= 20) {
+      memberStatus = "Silver Member";
+      badgeClass = "badge-member badge-silver";
+    }
+
+    document.getElementById('userNameDisplay').textContent = profile.name;
+    document.getElementById('userHandle').innerHTML = '@' + profile.name.toLowerCase().replace(/\s+/g, '') + ' &bull; Active Member';
+    
+    const initials = profile.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+    document.getElementById('avatarText').textContent = initials || 'O2H';
+
+    document.getElementById('userEmailDisplay').innerHTML = '<svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg> ' + profile.email;
+    document.getElementById('userCityDisplay').innerHTML = '<svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-6-5.2-6-10a6 6 0 0112 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg> ' + profile.city + ', Indonesia';
+    document.getElementById('userPhoneDisplay').innerHTML = '<svg class="icon" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg> ' + profile.phone;
+
+    const badgeEl = document.getElementById('memberBadge');
+    badgeEl.textContent = memberStatus;
+    badgeEl.className = badgeClass;
+
+    document.getElementById('statItemCount').textContent = totalItems;
+    document.getElementById('statTotalSpend').textContent = rupiah(totalSpend);
+    document.getElementById('statPoints').textContent = rewardPoints.toLocaleString('id-ID');
+
+    const inputs = document.querySelectorAll('#settingsForm input');
+    if(inputs.length >= 4) {
+      inputs[0].value = profile.name || '';
+      inputs[1].value = profile.email || '';
+      inputs[2].value = profile.phone || '';
+      inputs[3].value = profile.city || '';
+    }
+  }
+
+  function renderOrdersList() {
+    const orders = getOrders();
+    const box = document.getElementById('ordersList');
+
+    if (!orders.length) {
+      box.innerHTML = '<p class="wl-empty">Belum ada riwayat pesanan. <a href="product.html" style="color:var(--yellow);font-weight:700">Mulai Belanja &rarr;</a></p>';
+      return;
+    }
+
+    box.innerHTML = orders.map(ord => {
+      return '<div class="order-row">' +
+        '<div class="order-thumb"><svg class="icon" viewBox="0 0 24 24"><path d="M4 8l1.2-3.2A2 2 0 017 3.5h10a2 2 0 011.8 1.3L20 8"/><rect x="3" y="8" width="18" height="12" rx="2"/></svg></div>' +
+        '<div class="order-info">' +
+          '<div class="n">' + ord.summaryText + ' (' + ord.itemsCount + ' item)</div>' +
+          '<div class="d">#' + ord.id + ' &bull; ' + ord.date + '</div>' +
+        '</div>' +
+        '<span class="status done">SELESAI</span>' +
+        '<span class="order-amount">' + rupiah(ord.totalPrice) + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderCartSummary(){
+    const cart = getCart();
+    document.getElementById('cartCount').textContent = cart.length;
+    const box = document.getElementById('cartSummary');
+
+    if (!cart.length) {
+      box.innerHTML = '<p class="wl-empty">Keranjang kosong. <a href="product.html" style="color:var(--yellow);font-weight:700">Lihat Produk &rarr;</a></p>';
+      return;
+    }
+
+    const total = cart.reduce((sum, item) => {
+      const p = PRODUCTS.find(x => x.id === item.id);
+      return sum + (p ? p.price : 0);
+    }, 0);
+
+    const itemNames = cart.map(it => it.name).join(', ');
+
+    box.innerHTML = 
+      '<div class="cart-line"><span>' + cart.length + ' item di keranjang</span><span>' + (cart.length > 2 ? cart[0].name + ', dll' : itemNames) + '</span></div>' +
+      '<div class="cart-line total"><span>Total Estimasi</span><span class="mono">' + rupiah(total) + '</span></div>' +
+      '<button id="checkoutBtn" class="btn btn-primary btn-block">Checkout Sekarang</button>';
+
+    document.getElementById('checkoutBtn').addEventListener('click', processCheckout);
+  }
+
+  function processCheckout() {
+    const cart = getCart();
+    if (!cart.length) return;
+
+    const total = cart.reduce((sum, item) => {
+      const p = PRODUCTS.find(x => x.id === item.id);
+      return sum + (p ? p.price : 0);
+    }, 0);
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    const orderId = 'O2H-' + Date.now().toString().slice(-6);
+
+    const newOrder = {
+      id: orderId,
+      date: dateStr,
+      itemsCount: cart.length,
+      totalPrice: total,
+      summaryText: cart.length === 1 ? cart[0].name : cart[0].name + ' + ' + (cart.length - 1) + ' lainnya'
+    };
+
+    const orders = getOrders();
+    orders.unshift(newOrder);
+    setOrders(orders);
+
+    setCart([]);
+
+    renderCartSummary();
+    renderOrdersList();
+    renderProfileAndStats();
+
+    showToast('Transaksi berhasil! Pesanan diproses.');
+  }
+
+  function renderWishlist(){
+    const wl = getWish();
+    document.getElementById('wlStat').textContent = wl.length;
+    const box = document.getElementById('wishlistList');
+
+    if (!wl.length) {
+      box.innerHTML = '<p class="wl-empty">Wishlist masih kosong. <a href="product.html" style="color:var(--yellow);font-weight:700">Mulai belanja &rarr;</a></p>';
+      return;
+    }
+
+    box.innerHTML = wl.map(id => {
+      const p = PRODUCTS.find(x => x.id === id);
+      if (!p) return '';
+      return '<div class="wl-row">' +
+        '<div class="order-info"><div class="n">' + p.name + '</div><div class="d">' + p.brand + '</div></div>' +
+        '<span class="order-amount">' + rupiah(p.price) + '</span>' +
+        '<button class="wl-remove" data-id="' + id + '" aria-label="Hapus">' +
+        '<svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>';
+    }).join('');
+
+    box.querySelectorAll('.wl-remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        let w = getWish().filter(x => x !== btn.dataset.id);
+        localStorage.setItem('o2h_wish', JSON.stringify(w));
+        renderWishlist();
+        showToast('Dihapus dari wishlist');
+      });
+    });
+  }
+
+  const settingsForm = document.getElementById('settingsForm');
+  if (settingsForm) {
+    settingsForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const inputs = settingsForm.querySelectorAll('input');
+      const updatedProfile = {
+        name: inputs[0].value,
+        email: inputs[1].value,
+        phone: inputs[2].value,
+        city: inputs[3].value
+      };
+      localStorage.setItem('o2h_profile', JSON.stringify(updatedProfile));
+      renderProfileAndStats();
+      showToast('Profil berhasil diperbarui!');
+    });
+  }
+
+  renderProfileAndStats();
+  renderOrdersList();
+  renderCartSummary();
+  renderWishlist();
+</script>
+</body>
+</html>
